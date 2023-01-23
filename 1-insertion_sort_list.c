@@ -34,7 +34,7 @@ void insertion_sort_list(listint_t **list)
 /**
  * sorted_insert - Insert node in accending ordor
  *
- * @sorted: pointer to an empty list to insert to 
+ * @sorted: pointer to an empty list to insert to
  * @new: new node to insert to linked list
  *
  * Return: Nothing
@@ -56,9 +56,8 @@ void sorted_insert(listint_t **sorted, listint_t *new)
 	{
 		current = *sorted;
 
-		while (current->next != NULL && 
-			current->next->n < new->n)
-				current = current->next;
+		while (current->next != NULL && current->next->n < new->n)
+			current = current->next;
 
 		new->next = current->next;
 		if (current->next != NULL)
@@ -67,7 +66,5 @@ void sorted_insert(listint_t **sorted, listint_t *new)
 		current->next = new;
 		new->prev = current;
 	}
-
-	
 }
 
