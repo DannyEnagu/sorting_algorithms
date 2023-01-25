@@ -1,6 +1,7 @@
 #include "sort.h"
 
 void sorted_insert(listint_t **sorted, listint_t *new);
+void swap_nodes(listint_t **A, listint_t **B);
 
 /**
  * insertion_sort_list - Sorts a doubly linked list of integers
@@ -13,21 +14,26 @@ void sorted_insert(listint_t **sorted, listint_t *new);
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *current, *tmp;
-	listint_t *sorted = NULL;
+	listint_t *head, *current, *prev;
 
 	if (*list == NULL || (*list)->next == NULL)
 		return;
 
-	current = *list;
-	while (current != NULL)
+	head = (*list)->next;
+	while (head != NULL)
 	{
-		tmp = current->next;
-		current->prev = current->next = NULL;
-		sorted_insert(&sorted, current);
-		*list = sorted;
-		print_list(*list);
-		current = tmp;
+		current = head;
+		prev = current->prev;
+		while (prev && current->n < prev->n)
+		{
+			swap_nodes(&prev, &current);
+			if (prev == *list)
+				*list = current;
+			print_list(*list);
+			prev = current->prev;
+		}
+
+		head = head->next;
 	}
 }
 
@@ -68,3 +74,27 @@ void sorted_insert(listint_t **sorted, listint_t *new)
 	}
 }
 
+/**
+* swap_nodes - compare two node data in a linked list and
+* swap nodes, if need be.
+*
+* @head: pointer to head of linked list.
+* @curr: pointer to prev node
+* @next: pointer to next node
+*
+* Return: Nothing
+*/
+void swap_nodes(listint_t **A, listint_t **B)
+{
+	(*A)->next = (*B)->next;
+	(*B)->prev = (*A)->prev;
+
+	if ((*B)->next != NULL)
+		(*B)->next->prev = *A;
+
+	if ((*A)->prev != NULL)
+		(*A)->prev->next = *B;
+
+	(*B)->next = *A;
+	(*A)->prev = *B;
+}
