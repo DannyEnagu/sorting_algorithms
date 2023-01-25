@@ -30,9 +30,10 @@ void insertion_sort_list(listint_t **list)
 				print_list(*list);
 				prev = current->prev;
 			}
+			head = head->next;
+
 			if (swaped == false)
 				return;
-			head = head->next;
 		}
 	}
 }
