@@ -12,6 +12,7 @@
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *head, *current, *prev;
+	bool swaped = false;
 
 	if (*list && list && (*list)->next)
 	{
@@ -23,12 +24,14 @@ void insertion_sort_list(listint_t **list)
 			while (prev && current->n < prev->n)
 			{
 				swap_nodes(&prev, &current);
+				swaped = true;
 				if (prev == *list)
 					*list = current;
 				print_list(*list);
 				prev = current->prev;
 			}
-
+			if (swaped == false)
+				return;
 			head = head->next;
 		}
 	}
